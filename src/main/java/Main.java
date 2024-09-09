@@ -6,8 +6,7 @@ import vue.vueListeContact;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.Arrays;
+import java.sql.SQLException;
 import java.util.List;
 
 public class Main {
@@ -40,19 +39,14 @@ public class Main {
         JButton showContactsButton = new JButton("Afficher les contacts");
         showContactsButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         showContactsButton.addActionListener(e -> {
-           // recupere tout les contacts depuis un fichier JSON
+           // recupere tous les contacts depuis la base de données
             List contacts ;
             try {
-                contacts = GestionnaireContact.loadContacts("contacts.json");
-
-                //debug pour verfier si les contacts sont bien chargés
-                System.out.println(contacts);
-
-                new vueListeContact(contacts);
-            } catch (IOException ex) {
+                contacts = GestionnaireContact.loadContacts();
+            } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
-
+            new vueListeContact(contacts);
 
         });
         box.add(showContactsButton);
