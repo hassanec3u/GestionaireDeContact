@@ -41,4 +41,39 @@ public class GestionnaireContact {
         return contacts;
     }
 
+
+    public static void deleteContact(String id) throws SQLException {
+        String query = "DELETE FROM utilisateur WHERE id = ?";
+        try (Connection connection = DatabaseUtils.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, id);
+            statement.executeUpdate();
+        }
+    }
+
+    //requette pour rechercher un contact
+    public static List<Contact> searchContact(String keys) throws SQLException {
+        List<Contact> contacts = new ArrayList<>();
+        //recherche les contacts qui contient le mot clé
+        String query = "SELECT * FROM utilisateur WHERE prenom LIKE ? OR nom LIKE ?";
+        try (Connection connection = DatabaseUtils.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            String searchPattern = "%" + keys + "%";
+            statement.setString(1, searchPattern);
+            statement.setString(2, searchPattern);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Contact contact = new Contact(
+                            resultSet.getString("id"),
+                            resultSet.getString("prenom"),
+                            resultSet.getString("nom"),
+                            resultSet.getString("phone"),
+                            resultSet.getString("email")
+                    );
+                    contacts.add(contact);
+                }
+            }
+        }
+        return contacts;
+    }
 }

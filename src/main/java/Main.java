@@ -1,6 +1,7 @@
 import utlis.GestionnaireContact;
 import vue.Contact;
 import vue.VueCreationContact;
+import vue.VueRechercherContact;
 import vue.vueListeContact;
 
 import javax.swing.*;
@@ -35,7 +36,7 @@ public class Main {
         // Ajoute un espace entre les boutons
         box.add(Box.createVerticalStrut(10));
 
-        // Crée un nouveau bouton pour afficher les contacts
+        // Créer un nouveau boutton pour afficher les contacts
         JButton showContactsButton = new JButton("Afficher les contacts");
         showContactsButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         showContactsButton.addActionListener(e -> {
@@ -50,6 +51,19 @@ public class Main {
 
         });
         box.add(showContactsButton);
+
+        // Ajoute un espace entre les boutons
+        box.add(Box.createVerticalStrut(10));
+
+
+        // crée un nouveau bouton pour rechercher un contact
+        JButton searchContactButton = new JButton("Rechercher un contact");
+        searchContactButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        searchContactButton.addActionListener(e -> {
+            new VueRechercherContact();
+        });
+        box.add(searchContactButton);
+
 
         // Ajoute le conteneur Box au frame
         frame.add(box);
